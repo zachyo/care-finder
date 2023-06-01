@@ -4,7 +4,7 @@ import axios from "axios";
 interface LocationData {
   principalSubdivision: string;
   locality: string;
-  countryCode: string;
+  countryName: string;
 }
 
 const Location: React.FC = () => {
@@ -42,7 +42,7 @@ const Location: React.FC = () => {
           {" "}
           <li>
             Location: {data.locality}, {data.principalSubdivision},{" "}
-            {data.countryCode}
+            {data.countryName}
           </li>{" "}
         </ul>
       )}
