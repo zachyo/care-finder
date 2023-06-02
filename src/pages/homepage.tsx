@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Location from "../components/location";
 import axios from "axios";
+import ExportCustomersButton from "../components/exportcsv";
+import { customers } from "../customers";
 
 interface HospitalsData {
   data: any
@@ -28,6 +30,7 @@ const Homepage: React.FC = () => {
       <div className="hospital-list">List of hospitals based on location</div>
 
       <Location />
+      <ExportCustomersButton customers={customers} />
     </div>
   );
 };
