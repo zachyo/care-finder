@@ -3,6 +3,7 @@ import Location from "../components/location";
 import axios from "axios";
 import ExportCustomersButton from "../components/exportcsv";
 import { customers } from "../customers";
+import SignUp from "../components/signp/sigunup";
 
 interface HospitalsData {
   data: any
@@ -31,6 +32,7 @@ const Homepage: React.FC = () => {
 
       <Location />
       <ExportCustomersButton customers={customers} />
+      <SignUp/>
     </div>
   );
 };
