@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBJyhiyIrabNRYUsprVXfd8H_hc0j-MsA8",
   authDomain: "carefinder-c0f35.firebaseapp.com",
   projectId: "carefinder-c0f35",
-  storageBucket: "carefinder-c0f35.appspot.com",
+  storageBucket: "carefinder-c0f35.appspot.com", 
   messagingSenderId: "509123082325",
   appId: "1:509123082325:web:a0d6c26f508ba952253cdc",
   measurementId: "G-MZ6HRE9MXR",
