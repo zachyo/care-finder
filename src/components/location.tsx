@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import useHospitalStore from "../utils/hospitalStore";
 
 interface LocationData {
   principalSubdivision: string;
@@ -9,6 +10,7 @@ interface LocationData {
 
 const Location: React.FC = () => {
   const [data, setData] = useState<LocationData | null>(null);
+  const setLocality = useHospitalStore((state)=> state.setLocality)
 
   const getLocation = () => {
     const success = (position: GeolocationPosition) => {
@@ -21,6 +23,7 @@ const Location: React.FC = () => {
       axios.get(geoApiUrl).then((response) => {
         console.log(response.data);
         setData(response.data);
+        setLocality(response.data.locality)
       });
     };
 
