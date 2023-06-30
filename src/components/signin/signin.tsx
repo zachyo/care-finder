@@ -4,8 +4,8 @@ import { auth } from "../../firebase.utils";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import CustomButton from "../custom-button/custom-button";
 import careImg from "../../assets/image/Rectangle 113.png";
-import '../signup/signup.css'
-import { Link } from "react-router-dom";
+import "../signup/signup.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
   const [userCredentials, setCredentials] = useState({
@@ -13,17 +13,17 @@ const SignIn: React.FC = () => {
     password: "",
   });
   const { email, password } = userCredentials;
+  const navigate = useNavigate();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
+      // const uid = user.uid;
       console.log(user.email + " is logged in.");
       // ...
     } else {
       // User is signed out
-      console.log("user has logged out .");
-      // ...
+      console.log("user has logged out.");
     }
   });
 
@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        // ...
+        navigate("/profile-page");
       })
       .catch((error) => {
         const errorCode = error.code;
