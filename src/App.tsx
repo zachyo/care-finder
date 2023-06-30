@@ -6,7 +6,7 @@ import SignUp from "./components/signup/sigunup";
 import SignIn from "./components/signin/signin";
 import Hospitals from "./pages/hospitals";
 import Profile from "./pages/profile-page";
-import PrivateRoute from "./components/private-route";
+// import PrivateRoute from "./components/private-route";
 
 function App() {
   return (
