@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react";
-import Location from "../components/location";
-import axios from "axios";
-import ExportCustomersButton from "../components/exportcsv";
-import { customers } from "../customers";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase.utils";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import headerPic from "../assets/image/header-pic.png";
 import aboutImg1 from "../assets/image/Rectangle 7.png";
@@ -15,31 +9,10 @@ import searchHos from "../assets/icon/streamline-emojis_hospital.svg";
 import shareHos from "../assets/icon/ph_share-bold.svg";
 import "./homepage.css";
 
-interface HospitalsData {
-  data: any;
-}
 
 const Homepage: React.FC = () => {
-  const [hospitalList, setHospitalList] = useState<HospitalsData>();
 
-  const getHospitals = () => {
-    const hospitalApiUrl = `fetch from firebase`;
-
-    axios.get(hospitalApiUrl).then((response) => {
-      console.log(response.data);
-      setHospitalList(response.data);
-    });
-  };
-  const signOutFunction = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("signed out");
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-  };
+  
   useEffect(() => {
     // getHospitals();
   });
@@ -83,7 +56,7 @@ const Homepage: React.FC = () => {
               Discover Your Perfect Care: Find Your Hospital, Anytime, Anywhere!
             </p>
             <Link
-              to={"/signup"}
+              to={"/search-hospital"}
               className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
             >
               GET STARTED
@@ -98,7 +71,9 @@ const Homepage: React.FC = () => {
         </div>
         <div className="header-btm">
           <h1 className="text-deepBlueB text-4xl">Find a nearby hospital</h1>
-          <div className="search-button"></div>
+          <div className="search-button">
+            <input type="text" placeholder="Enter City..." className="w-1/2 p-3 rounded-xl mt-6 placeholder:italic"/>
+          </div>
         </div>
       </div>
       <div
@@ -112,9 +87,9 @@ const Homepage: React.FC = () => {
         <div className="about-info w-1/3 py-4">
           <h1 className="text-2xl font-semibold my-7">
             Welcome to
-            <h2 className="text-deepBlueB font-bold text-3xl my-2 mb-4">
+            <p className="text-deepBlueB font-bold text-3xl my-2 mb-4">
               CareFinder
-            </h2>
+            </p>
           </h1>
           <p className="font-semibold text-lg m-12 mb-24">
             Carefinder is a platform where users can search for hosiptals in
@@ -168,12 +143,9 @@ const Homepage: React.FC = () => {
           <p className="mb-4">Share the list of hospitals with others.</p>
         </div>
       </div>
-      <input type="text" placeholder="Enter Address" />
-      <div className="hospital-list">List of hospitals based on location</div>
+      <div className="footer p-36 bg-lightGreyB mt-32"></div>
 
-      <Location />
-      <ExportCustomersButton customers={customers} />
-      <button onClick={signOutFunction}>Sign Out</button>
+      
     </div>
   );
 };
