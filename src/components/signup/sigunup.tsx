@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import CustomButton from "../custom-button/custom-button";
 import { auth } from "../../firebase.utils";
 import careImg from '../../assets/image/Rectangle 113.png';
 import './signup.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   const [userCredentials, setCredentials] = useState({
@@ -13,6 +13,8 @@ const SignUp: React.FC = () => {
     retypePassword: "",
     email: "",
   });
+    const navigate = useNavigate();
+
   const { displayName, password, email, retypePassword } = userCredentials;
 
   const handleSubmit = async (event: any) => {
@@ -56,6 +58,23 @@ const SignUp: React.FC = () => {
     //   console.log(error);
     // }
   };
+
+  //monitor user
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      // const uid = user.uid;
+      // const displayName = user.displayName;
+      console.log(user.email + " is logged in.");
+      navigate("/profile");
+
+      // ...
+    } else {
+      // User is signed out
+      console.log("user has logged out.");
+    }
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -130,7 +149,9 @@ const SignUp: React.FC = () => {
       </div>
       <div className=" deets flex flex-col justify-center items-center">
         <h1 className="text-5xl font-bold mt-3 mb-12 text-blueB">
-          <Link to="/" className="hover:underline">CareFinder</Link>
+          <Link to="/" className="hover:underline">
+            CareFinder
+          </Link>
         </h1>
         <h2 className="text-3xl font-bold mb-8 w-48">Join Our Community</h2>
         <p className="font-bold w-96 text-lightBlack text-3xl">

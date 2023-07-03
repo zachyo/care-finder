@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        navigate("/profile-page");
+        navigate("/profile");
       })
       .catch((error) => {
         const errorCode = error.code;
