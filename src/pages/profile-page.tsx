@@ -7,7 +7,7 @@ import "react-markdown-editor-lite/lib/index.css";
 import { useFormik } from 'formik';
 import { auth } from '../firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignOut from '../components/profile/profile';
 
 
@@ -75,10 +75,12 @@ const Profile = () => {
     return (
       <div>
         <div className="top flex justify-between items-center border-b-4 border-darkerGreyB px-8 mb-12">
-          <h1 className="logo text-4xl font-bold text-blueB ">CareFinder</h1>
+          <Link to={"/search-hospital"}>
+            <h1 className="logo text-4xl font-bold text-blueB ">CareFinder</h1>
+          </Link>
           <div className="pp scale-75">
             <img src={pp} alt="" />
-            <SignOut/>
+            <SignOut />
           </div>
         </div>
         <div className="markdown">
