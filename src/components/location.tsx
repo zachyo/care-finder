@@ -37,10 +37,13 @@ const Location: React.FC = () => {
 
   return (
     <div>
-      <button className="location" onClick={getLocation}>
+      <button
+        className="location font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+        onClick={getLocation}
+      >
         Get Location
       </button>
-      {data && (
+      {/* {data && (
         <ul>
           {" "}
           <li>
@@ -48,7 +51,7 @@ const Location: React.FC = () => {
             {data.countryName}
           </li>{" "}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };
