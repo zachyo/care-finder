@@ -1,3 +1,7 @@
 .navbar {
     box-shadow: 0px 4px 4px rgba(14, 61, 183, 0.15);
 }
+.hospital-map {
+    height: 50vh;
+    background-image: url(../assets/image/Rectangle\ 56.png);
+}
