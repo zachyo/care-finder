@@ -24,8 +24,8 @@ const HospitalListComponent: React.FC<Props> = ({ data }) => {
     return (
       <tr key={hospital.id}>
         <td className="py-2 px-7 text-[14px]">{hospital.name}</td>
-        <td className="py-2 px-7 text-[14px]">{hospital.address ? `${hospital.address}` : ""}</td>
-        <td className="py-2 px-7 text-[14px]">{hospital.location}</td>
+        <td className="py-2 px-7 text-[14px]">{hospital.address}</td>
+        <td className="py-2 px-7 text-[14px]">{hospital.location ? hospital.location : '------------'}</td>
       </tr>
     );
   });
