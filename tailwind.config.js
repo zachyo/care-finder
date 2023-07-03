@@ -6,12 +6,14 @@ module.exports = {
       colors: {
         greyB: "#E0E4EC",
         lightGreyB: "#F2F2F2",
-        darkerGreyB : '#b2c1e7',
+        darkerGreyB: "#b2c1e7",
         blueB: "#08299B",
         deepBlueB: "#08299B",
         lightBlack: "#333232",
+        loader: "rgba(195, 195, 195, 0.6)",
       },
       animation: {
+        // spin: "spin 1s ease-in-out infinite",
         slideup: "slideup 1s ease-in-out",
         slidedown: "slidedown 1s ease-in-out",
         slideleft: "slideleft 1s ease-in-out",
@@ -20,6 +22,14 @@ module.exports = {
         slowfade: "slowfade 2.2s ease-in-out",
       },
       keyframes: {
+        spin: {
+          "0%": {
+            transform: "rotate(0turn)",
+          },
+          "100%": {
+            transform: "rotate(1turn)",
+          },
+        },
         slowfade: {
           from: { opacity: 0 },
           to: { opacity: 1 },
