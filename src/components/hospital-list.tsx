@@ -23,22 +23,24 @@ const HospitalListComponent: React.FC<Props> = ({ data }) => {
   const Movies = data?.slice(skip, skip + PER_PAGE).map((hospital, index) => {
     return (
       <tr key={hospital.id}>
-        <td>{hospital.name}</td>
-        <td>{hospital.address ? `${hospital.address}` : ""}</td>
-        <td>{hospital.location}</td>
+        <td className="py-2 px-7 text-[14px]">{hospital.name}</td>
+        <td className="py-2 px-7 text-[14px]">{hospital.address ? `${hospital.address}` : ""}</td>
+        <td className="py-2 px-7 text-[14px]">{hospital.location}</td>
       </tr>
     );
   });
 
   return (
     <div className="container flex flex-wrap justify-center ">
-      <table>
-        <thead>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Location</th>
-        </thead>
-        <tbody>{Movies}</tbody>
+      <table className="w-full text-left mx-5">
+        <tbody>
+          <tr>
+            <th className="p-8 text-[20px] w-3/12">Name</th>
+            <th className="p-8 text-[20px]">Address</th>
+            <th className="p-8 text-[20px]">Location</th>
+          </tr>
+          {Movies}
+        </tbody>
         {/* pagination */}
         <>
           <h3 className="pagination">
