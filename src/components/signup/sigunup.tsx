@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import CustomButton from "../custom-button/custom-button";
 import { auth } from "../../firebase.utils";
 import careImg from '../../assets/image/Rectangle 113.png';
 import './signup.css'
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../userContext";
 
 const SignUp: React.FC = () => {
   const [userCredentials, setCredentials] = useState({
@@ -13,16 +14,23 @@ const SignUp: React.FC = () => {
     retypePassword: "",
     email: "",
   });
+  const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    if (isLoggedIn) {
+      navigate("/profile");
+    }
 
   const { displayName, password, email, retypePassword } = userCredentials;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setIsLoading(true);
 
     if (password !== retypePassword) {
       // console.log(this.state);
       alert("Passwords don't match");
+      setIsLoading(false);
       return;
     }
 
@@ -66,12 +74,16 @@ const SignUp: React.FC = () => {
       // https://firebase.google.com/docs/reference/js/auth.user
       // const uid = user.uid;
       // const displayName = user.displayName;
+      setIsLoggedIn(true);
+      setCurrentUser(user);
       console.log(user.email + " is logged in.");
       navigate("/profile");
 
       // ...
     } else {
       // User is signed out
+      setIsLoggedIn(false);
+      setCurrentUser(null);
       console.log("user has logged out.");
     }
   });
@@ -138,7 +150,9 @@ const SignUp: React.FC = () => {
           className="mb-6 p-3 rounded-xl"
           required
         />
-        <CustomButton onclick={handleSubmit}>Create Account</CustomButton>
+        <CustomButton onclick={handleSubmit} isLoading={isLoading}>
+          Create Account
+        </CustomButton>
         {/* </form> */}
         <div className="redirect flex justify-center mt-16">
           <h1>Already have an account?</h1>&nbsp;

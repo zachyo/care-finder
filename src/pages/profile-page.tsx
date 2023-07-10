@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useContext } from 'react';
 import pp from '../assets/image/Ellipse 19.png'
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
@@ -9,6 +9,7 @@ import { auth } from '../firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import SignOut from '../components/profile/profile';
+import { UserContext } from '../userContext';
 
 
 interface FormValues {
@@ -35,6 +36,8 @@ const mdParser = new MarkdownIt();
 
 const Profile = () => {
     const [markdownContent, setMarkdownContent] = useState("");
+    const { currentUser, setIsLoggedIn, setCurrentUser} = useContext(UserContext)
+    console.log(currentUser)
     const handleEditorChange = ( { text } : {text : string}) => {
       setMarkdownContent(text);
     };
@@ -58,14 +61,13 @@ const Profile = () => {
     //monitor user
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        // const uid = user.uid;
-        // const displayName = user.displayName;
-        console.log(user.email + " is logged in.");
-        // ...
+        // User is signed in
+        setCurrentUser(user);
+        setIsLoggedIn(true);
       } else {
         // User is signed out
+        setIsLoggedIn(false);
+        setCurrentUser(null);
         console.log("user has logged out.");
         navigate('/signin')
       }
@@ -74,18 +76,17 @@ const Profile = () => {
     const { handleChange, handleSubmit, values, errors } = Formik;
     return (
       <div>
-        <div className="top flex justify-between items-center border-b-4 border-darkerGreyB px-8 mb-12">
+        <div className="top flex justify-between items-center border-b-4 border-darkerGreyB px-8 mb-12 py-3">
           <Link to={"/search-hospital"}>
             <h1 className="logo text-4xl font-bold text-blueB ">CareFinder</h1>
           </Link>
-          <div className="pp scale-75">
-            <img src={pp} alt="" />
+          <div className="pp flex gap-3">
+            <img src={pp} alt="" className="h-12" />
             <SignOut />
           </div>
         </div>
         <div className="markdown">
-          <h1 className="text-3xl font-bold">Welcome</h1>
-          <h1 className="text-3xl font-bold">Add A Hospital</h1>
+          <h1 className="text-3xl font-bold mb-4">Welcome - Add A Hospital</h1>
           <form onSubmit={Formik.handleSubmit}>
             <MdEditor
               style={{ height: "500px" }}
@@ -93,7 +94,11 @@ const Profile = () => {
               renderHTML={(text) => mdParser.render(text)}
               onChange={handleEditorChange}
             />
-            <button style={{ margin: "1rem 0" }} type="submit">
+            <button
+              style={{ margin: "1rem 0" }}
+              type="submit"
+              className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+            >
               Submit
             </button>
           </form>

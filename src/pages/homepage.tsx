@@ -11,6 +11,12 @@ import "./homepage.css";
 
 
 const Homepage: React.FC = () => {
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   
   useEffect(() => {
@@ -24,7 +30,11 @@ const Homepage: React.FC = () => {
           <Link to="/" className="px-5 text-2xl">
             Home
           </Link>
-          <Link to="#" className="px-5 text-2xl">
+          <Link
+            to=""
+            className="px-5 text-2xl"
+            onClick={() => scrollToSection("about-carefinder")}
+          >
             About
           </Link>
           <Link to="" className="px-5 text-2xl">
@@ -61,7 +71,11 @@ const Homepage: React.FC = () => {
             >
               GET STARTED
             </Link>
-            <Link to={"#about"} className="block font-bold underline mt-8">
+            <Link
+              to=""
+              className="block font-bold underline mt-8"
+              onClick={() => scrollToSection("about-carefinder")}
+            >
               Learn More &rarr;
             </Link>
           </div>
@@ -69,16 +83,16 @@ const Homepage: React.FC = () => {
             <img src={headerPic} alt="header-pic" />
           </div>
         </div>
-        <div className="header-btm">
+        {/* <div className="header-btm">
           <h1 className="text-deepBlueB text-4xl">Find a nearby hospital</h1>
           <div className="search-button">
             <input type="text" placeholder="Enter City..." className="w-1/2 p-3 rounded-xl mt-6 placeholder:italic"/>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className="about flex m-8 mt-12 items-center justify-around relative "
-        id="about"
+        id="about-carefinder"
       >
         <div className="about-pic flex space-x-12">
           <img src={aboutImg1} alt="absolute" />
@@ -101,7 +115,7 @@ const Homepage: React.FC = () => {
             to={"/signup"}
             className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
           >
-            GET STARTED
+            SIGNUP
           </Link>
         </div>
       </div>
@@ -143,9 +157,9 @@ const Homepage: React.FC = () => {
           <p className="mb-4">Share the list of hospitals with others.</p>
         </div>
       </div>
-      <div className="footer p-36 bg-lightGreyB mt-32"></div>
-
-      
+      <div className="footer p-36 bg-lightGreyB mt-32">
+        <h2 className="mx-auto">footer</h2>
+      </div>
     </div>
   );
 };
