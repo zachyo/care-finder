@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "firebase/storage";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Hospital } from "../types/hospital";
+import loaderIcon from "../assets/icon/loader-icon.svg";
+
 
 interface Props {
   data: Hospital[];
@@ -75,22 +77,41 @@ const ExportCustomersButton: React.FC<Props> = ({ data, locality }) => {
     return mailtoLink;
   };
 
+  useEffect(()=>{
+    setDownloadUrl(null)
+  },[locality])
+
   return (
-    <div>
-      <button onClick={handleExportClick}>Export Hospitals as CSV</button>
+    <div className="mt-6 flex justify-center gap-3">
+      <button
+        onClick={handleExportClick}
+        className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+        disabled={loading}
+      >
+        {loading ? (
+          <img src={loaderIcon} alt="loader" className="animate-spin mx-auto" />
+        ) : (
+          <>Export Hospitals as CSV</>
+        )}
+      </button>
       {downloadUrl && !loading && (
-        <div>
-          <a href={downloadUrl} download="hospital_list.csv">
+        <>
+          <a
+            href={downloadUrl}
+            download="hospital_list.csv "
+            className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+          >
             Download CSV
           </a>
           <a
             href={generateShareableLink(downloadUrl)}
             target="_blank"
             rel="noopener noreferrer"
+            className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
           >
-            Share 
+            Share
           </a>
-        </div>
+        </>
       )}
     </div>
   );
