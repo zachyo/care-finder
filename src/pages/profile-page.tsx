@@ -101,6 +101,12 @@ const Profile = () => {
             >
               Submit
             </button>
+            <Link
+              to={"/search-hospital"}
+              className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB ml-4"
+            >
+              View Hospitals
+            </Link>
           </form>
         </div>
       </div>
