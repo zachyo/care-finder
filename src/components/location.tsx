@@ -8,7 +8,11 @@ interface LocationData {
   countryName: string;
 }
 
-const Location: React.FC = () => {
+type locationProps = {
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Location: React.FC<locationProps> = ({setPage} : locationProps) => {
   const [data, setData] = useState<LocationData | null>(null);
   const setLocality = useHospitalStore((state)=> state.setLocality)
 
@@ -23,6 +27,7 @@ const Location: React.FC = () => {
       axios.get(geoApiUrl).then((response) => {
         console.log(response.data);
         setData(response.data);
+        setPage(1)
         setLocality(response.data.locality)
       });
     };
@@ -41,7 +46,7 @@ const Location: React.FC = () => {
         className="location font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
         onClick={getLocation}
       >
-        Get Location
+        Get Hospitals in Your Location
       </button>
       {/* {data && (
         <ul>
