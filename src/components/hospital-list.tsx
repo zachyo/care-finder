@@ -6,21 +6,23 @@ import useHospitalStore from "../utils/hospitalStore";
 
 interface Props {
   data: Hospital[];
+  page : number;
+  setPage : React.Dispatch<React.SetStateAction<number>>;
 }
 
-const HospitalListComponent: React.FC<Props> = ({ data }) => {
+const HospitalListComponent: React.FC<Props> = ({ data, page, setPage }) => {
   // useEffect(() => {
   //   setGroupedPhotos(groupedPhotos);
   // }, []);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   //paging system
-  const PER_PAGE = 20;
+  const PER_PAGE = 10;
   const total = data?.length;
   const pages = Math.ceil(total / PER_PAGE);
   const skip = page * PER_PAGE - PER_PAGE;
 
-  const Movies = data?.slice(skip, skip + PER_PAGE).map((hospital, index) => {
+  const Hospitals = data?.slice(skip, skip + PER_PAGE).map((hospital, index) => {
     return (
       <tr key={hospital.id}>
         <td className="py-2 px-7 text-[14px]">{hospital.name}</td>
@@ -39,40 +41,31 @@ const HospitalListComponent: React.FC<Props> = ({ data }) => {
             <th className="p-8 text-[20px]">Address</th>
             <th className="p-8 text-[20px]">Location</th>
           </tr>
-          {Movies}
+          {Hospitals}
         </tbody>
-        {/* pagination */}
-        <>
-          <h3 className="pagination">
+      </table>
+      {/* pagination */}
+      <>
+        <div className="page-btns flex items-center justify-center gap-16 w-full mt-8">
+          <button
+            disabled={page <= 1}
+            onClick={() => setPage((prev) => prev - 1)}
+            className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB diabled:cursor-not-allowed"
+          >
+            Prev
+          </button>
+          <h3 className="pagination ">
             Pages: {data?.length > 0 ? page : 0} of {pages}
           </h3>
-          <div className="page-btns">
-            <button
-              disabled={page <= 1}
-              onClick={() => setPage((prev) => prev - 1)}
-            >
-              Prev
-            </button>
-            {Array.from({ length: pages }, (_, index) => index + 1).map(
-              (each) => (
-                <span
-                  onClick={() => setPage(each)}
-                  key={each}
-                  style={page === each ? { backgroundColor: "#011ff3" } : {}}
-                >
-                  {/* {each} */}
-                </span>
-              )
-            )}
-            <button
-              disabled={page >= pages}
-              onClick={() => setPage((prev) => prev + 1)}
-            >
-              Next
-            </button>
-          </div>
-        </>
-      </table>
+          <button
+            disabled={page >= pages}
+            onClick={() => setPage((prev) => prev + 1)}
+            className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+          >
+            Next
+          </button>
+        </div>
+      </>
     </div>
   );
 };

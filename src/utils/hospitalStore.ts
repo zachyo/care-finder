@@ -5,9 +5,11 @@ import { Hospital } from "../types/hospital";
 
 interface HospitalStoreState {
   hospitals: Hospital[];
+  exportedHospitals : Hospital[];
   locality : string;
   setLocality : (arg : string) => void //use void because function has no return value
   setHospitals: (arr : Hospital[]) => void;
+  setExportedHospitals : (arr : Hospital[]) => void;
   addNewHospital : (val : Hospital) => void;
 }
 
@@ -16,6 +18,7 @@ const hospitalStore = (
 ): HospitalStoreState => ({
   //this should be an empty object
   hospitals: [],
+  exportedHospitals : [],
   locality : '',  
   setLocality : (arg) => {
     set((state) => ({
@@ -28,6 +31,12 @@ const hospitalStore = (
       ...state,
       hospitals: arr,
     }));
+  },
+  setExportedHospitals : (arr) => {
+    set((state) => ({
+      ...state,
+      exportedHospitals : arr
+    }))
   },
   addNewHospital: (val) => {
     set((state) => ({
