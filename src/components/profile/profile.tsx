@@ -13,9 +13,12 @@ const SignOut = () => {
       });
   };
   return (
-    <div className="profile-dashboard">
-      <button onClick={signOutFunction}>Sign Out</button>
-    </div>
+      <button
+        onClick={signOutFunction}
+        className="font-bold rounded-xl bg-deepBlueB py-3 px-6 text-white border-2 hover:bg-white hover:text-deepBlueB hover:border-2 hover:border-deepBlueB"
+      >
+        Sign Out
+      </button>
   );
 };
 

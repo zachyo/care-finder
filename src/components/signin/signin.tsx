@@ -1,40 +1,55 @@
-import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import { auth } from "../../firebase.utils";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import CustomButton from "../custom-button/custom-button";
 import careImg from "../../assets/image/Rectangle 113.png";
 import "../signup/signup.css";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../userContext";
 
 const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [userCredentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  const { isLoggedIn, setIsLoggedIn, setCurrentUser} = useContext(UserContext);
+  if (isLoggedIn) {
+    navigate("/profile");
+  }
   const { email, password } = userCredentials;
-  const navigate = useNavigate();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       // const uid = user.uid;
+      
       console.log(user.email + " is logged in.");
+      setIsLoggedIn(true);
+      setCurrentUser(user);
+      navigate("/profile");
       // ...
     } else {
       // User is signed out
+      setIsLoggedIn(false);
       console.log("user has logged out.");
     }
   });
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setIsLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        setIsLoggedIn(true);
+        setCurrentUser(user);
         console.log(user);
+        setIsLoading(false);
         navigate("/profile");
       })
       .catch((error) => {
@@ -75,7 +90,7 @@ const SignIn: React.FC = () => {
           className="mb-6 p-3 rounded-xl"
           required
         />
-        <CustomButton onclick={handleSubmit}>Sign In</CustomButton>
+        <CustomButton onclick={handleSubmit} isLoading={isLoading}>Sign In</CustomButton>
 
         {/* //handle later */}
         {/* <div className="buttons">
